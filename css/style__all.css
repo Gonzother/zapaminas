@@ -8,7 +8,7 @@ body {
 
 .container {
   width: 900px;
-  margin: auto;
+  margin: 10px auto;
   padding: auto;
 }
 
@@ -32,6 +32,16 @@ body {
   color: black;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 5rem;
+  text-shadow: 4px 4px 10px red;
+}
+.main{
+  background-image: url(../assets/images/senializacion.jpg);
+  padding: 15px;
+}
+.section{
+  background-image: url(../assets/images/mimetizadoDesert.png);
+  display: flex;
+  justify-content: space-between;
 }
 
 /* BUTTON CSS */
@@ -45,8 +55,9 @@ body {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  background-color: transparent;
 }
 
 .button:active {
