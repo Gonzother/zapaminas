@@ -52,8 +52,42 @@ const cargaInicial = () => {
 
   //Asignacion numeros
   for (let i = 0; i < minaArray.length; i++) {
-    
-    
+    let contador;
+
+    for (let j = 0; j < minaArray[i].length; j++) {
+      if (minaArray[i][j].value != "mina") {
+        minaArray[i][j].classList.add("blue");
+
+        if (i > 0 && i < 17 && j > 0 && j < 17) {
+          if (minaArray[i - 1][j - 1].value === "mina") {
+            contador++;
+          }
+          if (minaArray[i - 1][j].value === "mina") {
+            contador++;
+          }
+          if (minaArray[i - 1][j + 1].value === "mina") {
+            contador++;
+          }
+          if (minaArray[i][j - 1].value === "mina") {
+            contador++;
+          }
+          if (minaArray[i][j + 1].value === "mina") {
+            contador++;
+          }
+          if (minaArray[i + 1][j - 1].value === "mina") {
+            contador++;
+          }
+          if (minaArray[i + 1][j].value === "mina") {
+            contador++;
+          }
+          if (minaArray[i + 1][j + 1].value === "mina") {
+            contador++;
+          }
+        }
+
+        minaArray[i][j].value = contador;
+      }
+    }
   }
 };
 document.addEventListener("DOMContentLoaded", cargaInicial);
