@@ -22,8 +22,8 @@ const nuevoJuego = () => {
 };
 abandonar.addEventListener("click", nuevoJuego);
 
-//Carga incial
-const cargaInicial = () => {
+//Carga botones
+const cargaBotones = () => {
   let fragment = document.createDocumentFragment();
 
   //Generacion botones
@@ -36,8 +36,10 @@ const cargaInicial = () => {
     }
   }
   section.append(fragment);
+};
 
-  //Asignacion minas
+//Asignacion minas
+const asignaMinas = () => {
   for (let i = 0; i < nMinas; i++) {
     let x, y;
 
@@ -49,45 +51,75 @@ const cargaInicial = () => {
     minaArray[x][y].value = "mina";
     minaArray[x][y].classList.add("rojo");
   }
-
+};
+//Asignacion numeros
+const asignaNumeros = () => {
   //Asignacion numeros
+  let contador = 0;
   for (let i = 0; i < minaArray.length; i++) {
-    let contador;
-
     for (let j = 0; j < minaArray[i].length; j++) {
       if (minaArray[i][j].value != "mina") {
-        minaArray[i][j].classList.add("blue");
-
-        if (i > 0 && i < 17 && j > 0 && j < 17) {
-          if (minaArray[i - 1][j - 1].value === "mina") {
-            contador++;
+        //Si no es la primera fila
+        if (i > 0) {
+          //Y no es la primera columna
+          if (j > 0) {
+            if (minaArray[i - 1][j - 1].value === "mina") {
+              contador++;
+            }
+          }
+          //Y no es la ultima columna
+          if (j < 17) {
+            if (minaArray[i - 1][j + 1].value === "mina") {
+              contador++;
+            }
           }
           if (minaArray[i - 1][j].value === "mina") {
             contador++;
           }
-          if (minaArray[i - 1][j + 1].value === "mina") {
-            contador++;
+        }
+
+        //Si no es la ultima fila
+        if (i < 17) {
+          //Y no la primera columna
+          if (j > 0) {
+            if (minaArray[i + 1][j - 1].value === "mina") {
+              contador++;
+            }
           }
-          if (minaArray[i][j - 1].value === "mina") {
-            contador++;
-          }
-          if (minaArray[i][j + 1].value === "mina") {
-            contador++;
-          }
-          if (minaArray[i + 1][j - 1].value === "mina") {
-            contador++;
+          //Y no es la ultima columna
+          if (j < 17) {
+            if (minaArray[i + 1][j + 1].value === "mina") {
+              contador++;
+            }
           }
           if (minaArray[i + 1][j].value === "mina") {
             contador++;
           }
-          if (minaArray[i + 1][j + 1].value === "mina") {
+        }
+
+        //Si no es la primera columna
+        if (j > 0) {
+          if (minaArray[i][j - 1].value === "mina") {
+            contador++;
+          }
+        }
+        //Si no es la ultima columna
+        if (j < 17) {
+          if (minaArray[i][j + 1].value === "mina") {
             contador++;
           }
         }
 
         minaArray[i][j].value = contador;
       }
+      contador = 0;
     }
   }
 };
-document.addEventListener("DOMContentLoaded", cargaInicial);
+
+document.addEventListener(
+  "DOMContentLoaded",
+  cargaBotones(),
+  asignaMinas(),
+  asignaNumeros()
+);

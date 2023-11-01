@@ -59,6 +59,8 @@ body {
   width: 3rem;
   height: 3rem;
   background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .button:active {
   box-shadow: 0px 0px 0px 0px;
@@ -96,9 +98,8 @@ body {
   font-variant: small-caps;
 }
 
-.rojo {
-  background-color: red;
-}
-.blue{
-  background-color: blue;
+.bandera{
+  background-image: url(../assets/images/bandera.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
