@@ -103,3 +103,8 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.rojo{
+  background-color: red;
+  background-image: url(../assets/images/explosion.png);
+}

@@ -1,20 +1,94 @@
-//Array del juego
+//Inicializacion del array del juego
 let minaArray = new Array(18);
 for (let i = 0; i < minaArray.length; i++) {
   minaArray[i] = new Array(18);
 }
 
 //Numero de minas
-let nMinas = Math.floor(Math.random() * (100 - 50) + 50);
+let nMinas = 2;
+/* let nMinas = Math.floor(Math.random() * (60 - 30) + 30); */
 
 //Elementos
 const contador = document.getElementById("contador");
 contador.textContent = nMinas;
+let count = nMinas;
+
+const total = document.getElementById("total");
+total.textContent = nMinas;
+
 const section = document.getElementById("section");
 
 const abandonar = document.getElementById("abandonar");
 
-section.addEventListener("click", (event) => {});
+//Funcion para colocar banderas y actualizar el contador
+const colocaBandera = (event) => {
+  if (event.target.classList.contains("bandera")) {
+    count++;
+  } else {
+    count--;
+  }
+
+  event.target.classList.toggle("bandera");
+  contador.textContent = count;
+
+  if (count == 0) {
+    finJuego(event);
+  }
+};
+
+//Comprobacion de minas
+const compruebaMinas = () => {
+  let minaArray = section.children;
+
+  for (const mina of minaArray) {
+    if (mina.value == "mina" && !mina.classList.contains("bandera")) {
+      return false;
+    }
+  }
+  return true;
+};
+
+//Funcion fin del juego
+const finJuego = (event) => {
+  section.removeEventListener("mousedown", clickHandle);
+
+  if (compruebaMinas()) {
+    console.log("has ganado");
+  } else {
+    console.log("has muerto");
+  }
+};
+
+//Funcion para revelar el contenido de una celda
+const revelaNumero = (event) => {
+  if (event.target.value === "mina") {
+    event.target.classList.add("rojo");
+    finJuego(event);
+  } else {
+    event.target.style.backgroundImage =
+      "url(../assets/images/numbers/" + event.target.value + ".png)";
+  }
+  event.target.disabled = true;
+};
+
+//Funcion comprobadora del click
+const clickHandle = (event) => {
+  {
+    if (event.target.nodeName === "BUTTON" && event.target.disabled == false) {
+      switch (event.button) {
+        case 0:
+          revelaNumero(event);
+          break;
+        case 2:
+          colocaBandera(event);
+          break;
+      }
+    }
+  }
+};
+
+//Listener que maneja el click sobre los botones
+section.addEventListener("mousedown", clickHandle);
 
 //Abandonar juego e iniciar uno nuevo
 const nuevoJuego = () => {
@@ -26,7 +100,6 @@ abandonar.addEventListener("click", nuevoJuego);
 const cargaBotones = () => {
   let fragment = document.createDocumentFragment();
 
-  //Generacion botones
   for (let i = 0; i < minaArray.length; i++) {
     for (let j = 0; j < minaArray[i].length; j++) {
       let newButton = document.createElement("BUTTON");
@@ -49,9 +122,9 @@ const asignaMinas = () => {
     } while (minaArray[x][y].value === "mina");
 
     minaArray[x][y].value = "mina";
-    minaArray[x][y].classList.add("rojo");
   }
 };
+
 //Asignacion numeros
 const asignaNumeros = () => {
   //Asignacion numeros
@@ -68,7 +141,7 @@ const asignaNumeros = () => {
             }
           }
           //Y no es la ultima columna
-          if (j < 17) {
+          if (j < minaArray[i].length - 1) {
             if (minaArray[i - 1][j + 1].value === "mina") {
               contador++;
             }
@@ -79,15 +152,15 @@ const asignaNumeros = () => {
         }
 
         //Si no es la ultima fila
-        if (i < 17) {
-          //Y no la primera columna
+        if (i < minaArray.length - 1) {
+          //Y no es la primera columna
           if (j > 0) {
             if (minaArray[i + 1][j - 1].value === "mina") {
               contador++;
             }
           }
           //Y no es la ultima columna
-          if (j < 17) {
+          if (j < minaArray[i].length - 1) {
             if (minaArray[i + 1][j + 1].value === "mina") {
               contador++;
             }
@@ -104,7 +177,7 @@ const asignaNumeros = () => {
           }
         }
         //Si no es la ultima columna
-        if (j < 17) {
+        if (j < minaArray[i].length - 1) {
           if (minaArray[i][j + 1].value === "mina") {
             contador++;
           }
@@ -117,6 +190,7 @@ const asignaNumeros = () => {
   }
 };
 
+//DOMContentLoaded
 document.addEventListener(
   "DOMContentLoaded",
   cargaBotones(),
