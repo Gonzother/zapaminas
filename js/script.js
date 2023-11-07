@@ -18,6 +18,7 @@ total.textContent = nMinas;
 
 const section = document.getElementById("section");
 
+const marcador_p = document.getElementById("marcador_p");
 const abandonar = document.getElementById("abandonar");
 
 //Funcion para colocar banderas y actualizar el contador
@@ -32,7 +33,7 @@ const colocaBandera = (event) => {
   contador.textContent = count;
 
   if (count == 0) {
-    finJuego(event);
+    finJuego();
   }
 };
 
@@ -49,13 +50,16 @@ const compruebaMinas = () => {
 };
 
 //Funcion fin del juego
-const finJuego = (event) => {
+const finJuego = () => {
   section.removeEventListener("mousedown", clickHandle);
 
   if (compruebaMinas()) {
+    marcador_p.textContent = "Eres un autentico zapador";
     console.log("has ganado");
   } else {
-    console.log("has muerto");
+    marcador_p.textContent = "Los siento, has muerto";
+    abandonar.classList.add("otra");
+    console.log("has perdido");
   }
 };
 
@@ -63,7 +67,7 @@ const finJuego = (event) => {
 const revelaNumero = (event) => {
   if (event.target.value === "mina") {
     event.target.classList.add("rojo");
-    finJuego(event);
+    finJuego();
   } else {
     event.target.style.backgroundImage =
       "url(../assets/images/numbers/" + event.target.value + ".png)";
