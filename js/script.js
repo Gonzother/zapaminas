@@ -5,8 +5,7 @@ for (let i = 0; i < minaArray.length; i++) {
 }
 
 //Numero de minas
-let nMinas = 2;
-/* let nMinas = Math.floor(Math.random() * (60 - 30) + 30); */
+let nMinas = Math.floor(Math.random() * (60 - 30) + 30);
 
 //Elementos
 const contador = document.getElementById("contador");
@@ -69,24 +68,23 @@ const revelaNumero = (event) => {
     event.target.classList.add("rojo");
     finJuego();
   } else {
+    console.log("si");
     event.target.style.backgroundImage =
-      "url(../assets/images/numbers/" + event.target.value + ".png)";
+      "url(./assets/images/numbers/" + event.target.value + ".png)";
   }
   event.target.disabled = true;
 };
 
 //Funcion comprobadora del click
 const clickHandle = (event) => {
-  {
-    if (event.target.nodeName === "BUTTON" && event.target.disabled == false) {
-      switch (event.button) {
-        case 0:
-          revelaNumero(event);
-          break;
-        case 2:
-          colocaBandera(event);
-          break;
-      }
+  if (event.target.nodeName === "BUTTON" && event.target.disabled == false) {
+    switch (event.button) {
+      case 0:
+        revelaNumero(event);
+        break;
+      case 2:
+        colocaBandera(event);
+        break;
     }
   }
 };
